@@ -33,13 +33,36 @@ function size(list){
 }
 function add(list, elem){
     var elem= parseInt(elem); //Lo convierto en un entero, el elemento que me han pasado
+    var aux =[];
     if (isNaN(elem)) { //Compruebo que no esté vacio.
         throw "El elemento no es un número";
     }
-    if(!isFull(list)){ //Si la lista está llena no puedo meter el nuevo elemento
-        list[size(list)]=elem;// lo meto en el último hueco que hay vacio, que lo compruebo con el método size
+    if(isFull(list)){ //Si la lista está llena no puedo meter el nuevo elemento
+        throw "La lista está llena";   
+    }
+    if(isEmpty(list)){ //Si la lista está vacia no tengo que comprobar nada, simplemente se agrega el elemento.
+        list[0]=elem; 
+        return size(list);
+    }
+    var j=0;
+    for(var i=0; i<size(list);i++){
+        if(list[i]<=elem){
+            aux[j]=list[i];
+        }else{
+            aux[j]=elem;
+            break; 
+        }
+        j++;
+    }
+    if(j>=size(list)){
+        aux[j]=elem;
     }else{
-        throw "La lista está llena";
+        for(var i=j; i<size(list);i++){
+            aux[i+1]=list[i];
+        }
+    }
+    for(var i=0;i<size(aux);i++){
+        list[i]=aux[i];
     }
     return size(list); 
 }
@@ -75,7 +98,8 @@ function indexOf(list,elem){
     }
     return result;
 }
-function lastIndexOf(list,elem){ //
+function lastIndexOf(list,elem){ //En el ejercicio pone que se quite la función, pero luego pone que la dejemos
+    //si un número se repite tiene sentido que exista la función.
     if(isNaN(elem)){
         throw "The element is not a number";
     }
@@ -98,7 +122,7 @@ function clear(list){
         for (var i=0; i<length;i++){ //Sustituyo cada entero de la lista con un nan
             list[i] = Number.NaN;
         } 		 		 		
-    } 	
+    } 
 }
 function firstElement(list){
     var first;
@@ -155,14 +179,22 @@ function testlist(){
     console.log("Está llena: " + isFull(list));
     console.log("Añado un 5 en la posicón: "+add(list, 5));
     console.log("Está vacía: " + isEmpty(list));
+    add(list,2);
+    add(list,4);
+    add(list,6);
+    add(list,1);
+    console.log(toString(list));
     console.log("El elemento 5 está en la posición: "+indexOf(list,5));
     console.log(toString(list));
     console.log("El elemento 4 está en la posición empezando por atrás: "+lastIndexOf(list,4));
     console.log("Capacidad máxima: "+capacity(list));
     console.log(toString(list));
     clear(list);
-    console.log(toString(list));//No tiene que pintar nada
-    var list=[2,3,1,5,6]; //Lo relleno a mano para hacer pruebas
+    add(list,2);
+    add(list,4);
+    add(list,6);
+    add(list,1);
+    add(list,7);
     console.log(toString(list));
     console.log("Borro el elemento de la posición 3 que es: "+remove(list,3));
     console.log(toString(list));
