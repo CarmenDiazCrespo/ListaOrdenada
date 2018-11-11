@@ -190,8 +190,8 @@ function testlist(){
     console.log("Capacidad máxima: "+capacity(list));
     console.log(toString(list));
     clear(list);
-    add(list,2);
-    add(list,4);
+    add(list,3);
+    add(list,8);
     add(list,6);
     add(list,1);
     add(list,7);
